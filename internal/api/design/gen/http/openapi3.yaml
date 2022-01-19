@@ -1,0 +1,84 @@
+openapi: 3.0.3
+info:
+  title: API
+  description: HTTP API
+  version: 1.0.0
+servers:
+- url: http://localhost/
+  description: Server that hosts the API
+paths:
+  /foo:
+    get:
+      tags:
+      - foo
+      summary: Get foo
+      operationId: foo#Get
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetRequestBody'
+            example:
+              fromProfileID: 658594
+              fromProfileUUID: 91533209-d516-41a8-aa93-97e36b4ab195
+              validateMe: one
+      responses:
+        "200":
+          description: OK response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resulttype'
+              example:
+                fromProfileID: 658594
+                fromProfileUUID: 91533209-d516-41a8-aa93-97e36b4ab195
+components:
+  schemas:
+    GetRequestBody:
+      type: object
+      properties:
+        fromProfileID:
+          type: integer
+          description: profile id of the endorsement sender
+          example: 658594
+          minimum: 1
+        fromProfileUUID:
+          type: string
+          description: profile uuid of the endorsement sender
+          example: 91533209-d516-41a8-aa93-97e36b4ab195
+          format: uuid
+        validateMe:
+          type: string
+          example: two
+          enum:
+          - one
+          - two
+      example:
+        fromProfileID: 658594
+        fromProfileUUID: 91533209-d516-41a8-aa93-97e36b4ab195
+        validateMe: one
+      required:
+      - fromProfileUUID
+      - fromProfileID
+    Resulttype:
+      type: object
+      properties:
+        fromProfileID:
+          type: integer
+          description: profile id of the endorsement sender
+          example: 658594
+          minimum: 1
+        fromProfileUUID:
+          type: string
+          description: profile uuid of the endorsement sender
+          example: 91533209-d516-41a8-aa93-97e36b4ab195
+          format: uuid
+      example:
+        fromProfileID: 658594
+        fromProfileUUID: 91533209-d516-41a8-aa93-97e36b4ab195
+      required:
+      - fromProfileUUID
+      - fromProfileID
+tags:
+- name: foo
